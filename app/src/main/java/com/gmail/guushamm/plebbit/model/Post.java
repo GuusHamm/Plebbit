@@ -26,7 +26,7 @@ public class Post {
 		this.domain = domain;
 		this.id = id;
 	}
-
+	//region Getters
 	public String getTitle() {
 		return title;
 	}

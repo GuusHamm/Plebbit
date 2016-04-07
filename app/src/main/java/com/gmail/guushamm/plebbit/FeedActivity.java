@@ -3,6 +3,8 @@ package com.gmail.guushamm.plebbit;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,13 +16,15 @@ import java.util.concurrent.ExecutionException;
 
 public class FeedActivity extends AppCompatActivity {
 
+	private List<Post> posts;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_feed);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
-		List<Post> posts = null;
+		posts = null;
 
 		try {
 			posts = new RedditApi().execute("meirl").get();
@@ -33,8 +37,17 @@ public class FeedActivity extends AppCompatActivity {
 		if (posts.size() > 0 ){
 			Toast toast = Toast.makeText(getApplicationContext(),posts.get(0).getTitle(),Toast.LENGTH_LONG);
 			toast.show();
-
 		}
+		setRecycleView();
+
+	}
+
+	public void setRecycleView() {
+		RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+		LinearLayoutManager llm = new LinearLayoutManager(this);
+		recyclerView.setLayoutManager(llm);
+
+		RVAdapter adapter = new RVAdapter(posts, getWindowManager().getDefaultDisplay());
 	}
 
 	@Override
