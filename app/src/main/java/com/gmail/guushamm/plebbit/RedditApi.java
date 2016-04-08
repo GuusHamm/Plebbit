@@ -16,7 +16,7 @@ import java.util.List;
 public class RedditApi extends AsyncTask<String, Integer, List<Post>> {
 	private final String URL_TEMPLATE_AFTER = "http://www.reddit.com/r/SUBREDDIT_NAME/.json_?after=AFTER";
 	private final String URL_TEMPLATE = "http://www.reddit.com/r/SUBREDDIT_NAME/.json";
-	private String after = "";
+	private static String after = "";
 
 
 	private String generateURL(String subreddit){
