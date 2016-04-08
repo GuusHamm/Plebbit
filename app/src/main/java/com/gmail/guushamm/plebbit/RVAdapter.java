@@ -64,7 +64,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
         display.getMetrics(outMetrics);
         float scWidth = outMetrics.widthPixels;
         holder.image.getLayoutParams().width = (int) scWidth;
-        holder.image.getLayoutParams().height = (int) (scWidth * 0.6f);
 
     }
 
