@@ -32,7 +32,8 @@ public class RedditApi {
 		if (after.isEmpty()){
 			return URL_TEMPLATE.replace("SUBREDDIT_NAME",subreddit);
 		}else {
-			return URL_TEMPLATE_AFTER.replace("SUBREDDIT_NAME",subreddit).replace("AFTER",after);
+			String result = URL_TEMPLATE_AFTER.replace("SUBREDDIT_NAME",subreddit);
+			return result.replace("AFTER",after);
 		}
 
 	}
