@@ -48,6 +48,7 @@ public class FeedActivity extends AppCompatActivity {
 		recyclerView.setLayoutManager(llm);
 
 		RVAdapter adapter = new RVAdapter(posts, getWindowManager().getDefaultDisplay());
+		recyclerView.setAdapter(adapter);
 	}
 
 	@Override
