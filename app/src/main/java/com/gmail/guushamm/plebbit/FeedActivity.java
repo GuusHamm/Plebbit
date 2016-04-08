@@ -2,13 +2,14 @@ package com.gmail.guushamm.plebbit;
 
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 import com.gmail.guushamm.plebbit.model.Post;
 
@@ -29,13 +30,20 @@ public class FeedActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_feed);
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(toolbar);
+
+		Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+		setSupportActionBar(myToolbar);
+
+		// Get a support ActionBar corresponding to this toolbar
+		ActionBar ab = getSupportActionBar();
+
+		// Enable the Up button
+		ab.setDisplayHomeAsUpEnabled(true);
+
 		posts = null;
 
-		redditApi = new RedditApi();
 		try {
-			posts = redditApi.execute("meirl").get();
+			posts = new RedditSubredditApi().execute("meirl").get();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -91,6 +99,14 @@ public class FeedActivity extends AppCompatActivity {
 		return true;
 	}
 
+	public boolean subredditSelectorSwitch(Menu menu){
+		MenuInflater menuInflater = getMenuInflater();
+//		menuInflater.inflate(R.);
+		return true;
+	}
+
+
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -98,9 +114,13 @@ public class FeedActivity extends AppCompatActivity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 
-		//noinspection SimplifiableIfStatement
-		if (id == R.id.action_settings) {
-			return true;
+		switch (id) {
+			case R.id.action_settings:
+				return true;
+
+			case R.id.action_favorite:
+
+				return true;
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -108,7 +128,7 @@ public class FeedActivity extends AppCompatActivity {
 
 	public void loadMorePosts(int startPosition) {
 		try {
-			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditApi().execute("meirl").get();
+			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute("meirl").get();
 			posts.addAll(newPosts);
 			adapter.notifyItemRangeInserted(startPosition, newPosts.size());
 		} catch (InterruptedException e) {
