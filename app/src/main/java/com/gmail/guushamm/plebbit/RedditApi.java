@@ -4,7 +4,7 @@ package com.gmail.guushamm.plebbit;
  * Created by guushamm on 07/04/16.
  */
 public class RedditApi {
-	private final String URL_TEMPLATE_AFTER = "http://www.reddit.com/r/SUBREDDIT_NAME/.json_?after=AFTER";
+	private final String URL_TEMPLATE_AFTER = "http://www.reddit.com/r/SUBREDDIT_NAME/.json?after=AFTER";
 	private final String URL_TEMPLATE = "http://www.reddit.com/r/SUBREDDIT_NAME/.json";
 	private String after = "";
 	private static RedditApi instance;
