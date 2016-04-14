@@ -24,8 +24,6 @@ public class FeedActivity extends AppCompatActivity {
 	private LinearLayoutManager llm;
 	private RVAdapter adapter;
 
-	private RedditApi redditApi;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -64,7 +62,7 @@ public class FeedActivity extends AppCompatActivity {
 
 		recyclerView.setLayoutManager(llm);
 
-		adapter = new RVAdapter(posts, getWindowManager().getDefaultDisplay());
+		adapter = new RVAdapter(posts, getWindowManager().getDefaultDisplay(),getApplicationContext());
 		recyclerView.setAdapter(adapter);
 
 		recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

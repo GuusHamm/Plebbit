@@ -1,5 +1,6 @@
 package com.gmail.guushamm.plebbit;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -11,9 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.gmail.guushamm.plebbit.model.Post;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Nekkyou on 7-4-2016.
@@ -23,10 +24,12 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
     private List<Post> posts;
     private Display display;
     private RedditImageApi redditImageApi;
+	private Context context;
 
-    public RVAdapter(List<Post> posts, Display display) {
+    public RVAdapter(List<Post> posts, Display display, Context context) {
         this.posts = posts;
         this.display = display;
+		this.context = context;
         redditImageApi = new RedditImageApi();
     }
 
@@ -37,27 +40,29 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
         return pvh;
     }
 
-    @Override
+	@Override
     public void onBindViewHolder(PostViewHolder holder, int position) {
         holder.name.setText(posts.get(position).getAuthor());
         Bitmap bitmap = null;
 
-        if (posts.get(position).getDomain().contains("imgur")){
-			try {
-				redditImageApi = new RedditImageApi();
-				bitmap = redditImageApi.execute(posts.get(position).getTitle()).get();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			}
+//        if (posts.get(position).getDomain().contains("imgur")){
+//			try {
+//				redditImageApi = new RedditImageApi();
+//				bitmap = redditImageApi.execute(posts.get(position).getTitle()).get();
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			} catch (ExecutionException e) {
+//				e.printStackTrace();
+//			}
+//
+//			if (bitmap != null) {
+//				holder.image.setImageBitmap(bitmap);
+//			} else {
+//				System.out.println("Bitmap is null");
+//			}
+//		}
 
-			if (bitmap != null) {
-				holder.image.setImageBitmap(bitmap);
-			} else {
-				System.out.println("Bitmap is null");
-			}
-		}
+		Picasso.with(context).load(posts.get(position).getTitle()).into(holder.image);
 
 
         DisplayMetrics outMetrics = new DisplayMetrics();
