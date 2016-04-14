@@ -41,7 +41,7 @@ public class FeedActivity extends AppCompatActivity {
 		posts = null;
 
 		try {
-			posts = new RedditSubredditApi().execute("meirl").get();
+			posts = new RedditSubredditApi().execute("AdviceAnimals").get();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
@@ -126,7 +126,7 @@ public class FeedActivity extends AppCompatActivity {
 
 	public void loadMorePosts(int startPosition) {
 		try {
-			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute("meirl").get();
+			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute("AdviceAnimals").get();
 			posts.addAll(newPosts);
 			adapter.notifyItemRangeInserted(startPosition, newPosts.size());
 		} catch (InterruptedException e) {

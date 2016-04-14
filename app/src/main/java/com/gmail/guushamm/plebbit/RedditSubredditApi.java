@@ -27,7 +27,7 @@ public class RedditSubredditApi extends AsyncTask<String, Integer, List<Post>> {
 
 				for (int i = 0;i < children.length(); i++){
 					JSONObject currentPost = children.getJSONObject(i).getJSONObject("data");
-					Post post = new Post(currentPost.getString("title"),currentPost.getString("url"),currentPost.getString("author"),currentPost.getInt("score"),currentPost.getInt("num_comments"),currentPost.getString("subreddit"),currentPost.getString("permalink"),currentPost.getString("domain"),currentPost.getString("id"));
+					Post post = new Post(currentPost.getString("subreddit"),currentPost.getString("title"),currentPost.getString("author"),currentPost.getInt("score"),currentPost.getInt("num_comments"),currentPost.getString("permalink"),currentPost.getString("url"),currentPost.getString("domain"),currentPost.getString("id"));
 					posts.add(post);
 				}
 

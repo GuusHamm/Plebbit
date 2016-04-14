@@ -42,7 +42,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
 
 	@Override
     public void onBindViewHolder(PostViewHolder holder, int position) {
-        holder.name.setText(posts.get(position).getAuthor());
+        holder.name.setText(posts.get(position).getTitle());
         Bitmap bitmap = null;
 
 //        if (posts.get(position).getDomain().contains("imgur")){
@@ -62,7 +62,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
 //			}
 //		}
 
-		Picasso.with(context).load(posts.get(position).getTitle()).into(holder.image);
+		Picasso.with(context).load(posts.get(position).getUrl()).into(holder.image);
 
 
         DisplayMetrics outMetrics = new DisplayMetrics();
