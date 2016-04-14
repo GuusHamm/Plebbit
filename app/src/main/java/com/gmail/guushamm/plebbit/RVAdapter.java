@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.gmail.guushamm.plebbit.model.Post;
 import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.builder.AnimateGifMode;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -44,7 +43,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
 
 	@Override
     public void onBindViewHolder(PostViewHolder holder, int position) {
-        holder.name.setText(posts.get(position).getTitle());
+        holder.title.setText(posts.get(position).getTitle());
+        holder.score.setText(String.valueOf(posts.get(position).getPoints()));
         Bitmap bitmap = null;
 
 //        if (posts.get(position).getDomain().contains("imgur")){
@@ -92,13 +92,15 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
 
     public static class PostViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
-        TextView name;
+        TextView title;
+        TextView score;
         ImageView image;
 
         PostViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cardView);
-            name = (TextView) itemView.findViewById(R.id.text);
+            title = (TextView) itemView.findViewById(R.id.text);
+            score = (TextView) itemView.findViewById(R.id.score);
             image = (ImageView) itemView.findViewById(R.id.image);
         }
     }

@@ -12,4 +12,19 @@
 	<item android:id="@+id/action_settings"
 		  android:title="@string/action_settings"/>
 
+	<item	android:title="filter"
+            android:icon="@drawable/ic_filter_list_black_24dp"
+			app:showAsAction="ifRoom">
+		<menu>
+			<item
+					android:id="@+id/menuSortHot"
+					android:title="Hot" />
+			<item
+					android:id="@+id/menuSortRising"
+					android:title="Rising" />
+            <item
+					android:id="@+id/menuSortTop"
+					android:title="Top" />
+		</menu>
+	</item>
 </menu>
