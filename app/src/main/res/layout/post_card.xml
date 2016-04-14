@@ -42,7 +42,8 @@
                     android:text="-"
                     android:id="@+id/button2"
                     android:layout_alignParentStart="false"
-                    android:layout_alignParentEnd="true"/>
+                    android:layout_alignParentEnd="false"
+                    android:layout_toLeftOf="@+id/button"/>
 
             <Button
                     android:layout_width="wrap_content"
@@ -50,7 +51,7 @@
                     android:text="+"
                     android:id="@+id/button"
                     android:layout_marginRight="5dp"
-                    android:layout_toLeftOf="@+id/button2"/>
+                    android:layout_alignParentEnd="true"/>
 
             <TextView
                     android:id="@+id/score"
