@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.gmail.guushamm.plebbit.model.Post;
+import com.koushikdutta.ion.Ion;
+import com.koushikdutta.ion.builder.AnimateGifMode;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -62,7 +64,18 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
 //			}
 //		}
 
-		Picasso.with(context).load(posts.get(position).getUrl()).into(holder.image);
+        String isGif = "";
+        isGif = posts.get(position).getTitle();
+        if (isGif.endsWith(".gif") || isGif.endsWith(".gifv")) {
+            try {
+                Ion.with(holder.image).error(R.drawable.error).load(posts.get(position).getPermalink());
+            } catch (Exception e) {
+                System.out.println("Error at gif");
+                System.out.println(e.getStackTrace());
+            }
+        } else {
+            Picasso.with(context).load(posts.get(position).getPermalink()).into(holder.image);
+        }
 
 
         DisplayMetrics outMetrics = new DisplayMetrics();
