@@ -67,14 +67,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
         String isGif = "";
         isGif = posts.get(position).getTitle();
         if (isGif.endsWith(".gif") || isGif.endsWith(".gifv")) {
-            try {
-                Ion.with(holder.image).error(R.drawable.error).load(posts.get(position).getPermalink());
-            } catch (Exception e) {
-                System.out.println("Error at gif");
-                System.out.println(e.getStackTrace());
-            }
+            Ion.with(holder.image).error(R.drawable.error).load(posts.get(position).getUrl());
         } else {
-            Picasso.with(context).load(posts.get(position).getPermalink()).into(holder.image);
+            Picasso.with(context).load(posts.get(position).getUrl()).into(holder.image);
         }
 
 
