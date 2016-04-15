@@ -16,7 +16,7 @@ import java.util.List;
 public class RedditSubredditApi extends AsyncTask<String, Integer, List<Post>> {
 	@Override
 	protected List<Post> doInBackground(String... params) {
-			String raw = RemoteData.readContents(RedditApi.getInstance().generateURL(params[0]));
+			String raw = RemoteData.readContents(params[0]);
 			List<Post> posts = new ArrayList<>();
 
 			try {

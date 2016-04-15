@@ -10,7 +10,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import com.gmail.guushamm.plebbit.model.Post;
 
 import java.util.ArrayList;
@@ -23,11 +26,15 @@ public class FeedActivity extends AppCompatActivity {
 	private RecyclerView recyclerView;
 	private LinearLayoutManager llm;
 	private RVAdapter adapter;
+	private String subreddit;
+	private String sorting;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_feed);
+
+		posts = new ArrayList<>();
 
 		Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 		setSupportActionBar(myToolbar);
@@ -35,23 +42,42 @@ public class FeedActivity extends AppCompatActivity {
 		// Get a support ActionBar corresponding to this toolbar
 		ActionBar ab = getSupportActionBar();
 
+		View view = getLayoutInflater().inflate(R.layout.actionbar_spinner, null);
+		final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+				R.array.subreddit_array, android.R.layout.simple_spinner_item);
+		// Specify the layout to use when the list of choices appears
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
+		// Apply the adapter to the spinner
+		spinner.setAdapter(adapter);
+
+		spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+				try {
+					subreddit = String.valueOf(adapter.getItem(position));
+					posts = new RedditSubredditApi().execute(subreddit).get();
+					setRecycleView();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+
+			}
+		});
+
+		ab.setCustomView(view);
+		ab.setDisplayShowCustomEnabled(true);
 		// Enable the Up button
 		ab.setDisplayHomeAsUpEnabled(true);
 
-		posts = null;
 
-		try {
-			posts = new RedditSubredditApi().execute("AdviceAnimals").get();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
 
-		if (posts.size() > 0 ){
-			Toast toast = Toast.makeText(getApplicationContext(),posts.get(0).getTitle(),Toast.LENGTH_LONG);
-			toast.show();
-		}
 		setRecycleView();
 
 	}
@@ -62,7 +88,7 @@ public class FeedActivity extends AppCompatActivity {
 
 		recyclerView.setLayoutManager(llm);
 
-		adapter = new RVAdapter(posts, getWindowManager().getDefaultDisplay(),getApplicationContext());
+		adapter = new RVAdapter(posts, getWindowManager().getDefaultDisplay(), getApplicationContext());
 		recyclerView.setAdapter(adapter);
 
 		recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -97,12 +123,11 @@ public class FeedActivity extends AppCompatActivity {
 		return true;
 	}
 
-	public boolean subredditSelectorSwitch(Menu menu){
+	public boolean subredditSelectorSwitch(Menu menu) {
 		MenuInflater menuInflater = getMenuInflater();
 //		menuInflater.inflate(R.);
 		return true;
 	}
-
 
 
 	@Override
@@ -115,10 +140,6 @@ public class FeedActivity extends AppCompatActivity {
 		switch (id) {
 			case R.id.action_settings:
 				return true;
-
-			case R.id.action_favorite:
-
-				return true;
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -126,7 +147,7 @@ public class FeedActivity extends AppCompatActivity {
 
 	public void loadMorePosts(int startPosition) {
 		try {
-			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute("AdviceAnimals").get();
+			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute(this.subreddit).get();
 			posts.addAll(newPosts);
 			adapter.notifyItemRangeInserted(startPosition, newPosts.size());
 		} catch (InterruptedException e) {

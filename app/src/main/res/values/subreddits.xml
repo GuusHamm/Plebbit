@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="subreddit_array">
+        <item>meirl</item>
+        <item>me_irl</item>
+        <item>AdviceAnimals</item>
+        <item>ProgrammerHumor</item>
+        <item>DestructionPorn</item>
+        <item>wallpapers</item>
+        <item>MadeMeSmile</item>
+        <item>mylittlepony</item>
+        <item>GeekPorn</item>
+    </string-array>
+</resources>
