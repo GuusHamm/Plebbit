@@ -6,7 +6,7 @@
 		  android:title="@string/action_settings"/>
 
 	<item	android:title="filter"
-            android:icon="@drawable/ic_filter_list_white_24dp"
+            android:icon="@drawable/ic_filter_list_black_24dp"
 			app:showAsAction="ifRoom">
 		<menu>
 			<item

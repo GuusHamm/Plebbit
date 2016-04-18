@@ -5,7 +5,7 @@ package com.gmail.guushamm.plebbit;
  */
 public class RedditApi {
 	private final String URL_TEMPLATE_AFTER = "http://www.reddit.com/r/SUBREDDIT_NAME/.json?after=AFTER&limit=10";
-	private final String URL_TEMPLATE_AFTER = "http://www.reddit.com/r/SUBREDDIT_NAME/.json?after=AFTER&limit=10";
+//	private final String URL_TEMPLATE_AFTER = "http://www.reddit.com/r/SUBREDDIT_NAME/.json?after=AFTER&limit=10";
 	private final String URL_TEMPLATE = "http://www.reddit.com/r/SUBREDDIT_NAME/.json";
 	private final String URL_TEMPLATE_SORTING = "http://www.reddit.com/r/SUBREDDIT_NAME/SORT/.json";
 	private String after = "";

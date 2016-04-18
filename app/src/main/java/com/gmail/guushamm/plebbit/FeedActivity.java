@@ -1,7 +1,11 @@
 package com.gmail.guushamm.plebbit;
 
 
+import android.app.NotificationManager;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -56,7 +60,8 @@ public class FeedActivity extends AppCompatActivity {
 			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 				try {
 					subreddit = String.valueOf(adapter.getItem(position));
-					posts = new RedditSubredditApi().execute(subreddit).get();
+					//TODO use selected type
+					posts = new RedditSubredditApi().execute(RedditApi.getInstance().generateURL(subreddit, "top")).get();
 					setRecycleView();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -79,6 +84,22 @@ public class FeedActivity extends AppCompatActivity {
 
 
 		setRecycleView();
+
+
+
+		//Notification test
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
+				.setSmallIcon(R.drawable.ic_text_format_black_24dp)
+				.setContentTitle("Notification from me")
+				.setContentText("Small text here");
+
+		mBuilder.setVibrate(new long[] {50, 50, 50, 50, 50, 50, 50});
+		Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+		mBuilder.setSound(alarmSound);
+
+		NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		manager.notify(001, mBuilder.build());
+
 
 	}
 
@@ -147,7 +168,8 @@ public class FeedActivity extends AppCompatActivity {
 
 	public void loadMorePosts(int startPosition) {
 		try {
-			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute(this.subreddit).get();
+//			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute(this.subreddit).get();
+			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute(RedditApi.getInstance().generateURL(subreddit, "top")).get();
 			posts.addAll(newPosts);
 			adapter.notifyItemRangeInserted(startPosition, newPosts.size());
 		} catch (InterruptedException e) {
