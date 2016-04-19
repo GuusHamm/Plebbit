@@ -169,6 +169,7 @@ public class FeedActivity extends AppCompatActivity {
 	public void loadMorePosts(int startPosition) {
 		try {
 //			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute(this.subreddit).get();
+			//TODO use selected type
 			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute(RedditApi.getInstance().generateURL(subreddit, "top")).get();
 			posts.addAll(newPosts);
 			adapter.notifyItemRangeInserted(startPosition, newPosts.size());

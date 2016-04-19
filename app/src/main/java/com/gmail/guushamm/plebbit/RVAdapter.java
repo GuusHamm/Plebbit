@@ -1,12 +1,15 @@
 package com.gmail.guushamm.plebbit;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -42,34 +45,33 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
     }
 
 	@Override
-    public void onBindViewHolder(PostViewHolder holder, int position) {
+    public void onBindViewHolder(PostViewHolder holder, final int position) {
         holder.title.setText(posts.get(position).getTitle());
         holder.score.setText(String.valueOf(posts.get(position).getPoints()));
         Bitmap bitmap = null;
 
-//        if (posts.get(position).getDomain().contains("imgur")){
-//			try {
-//				redditImageApi = new RedditImageApi();
-//				bitmap = redditImageApi.execute(posts.get(position).getTitle()).get();
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			} catch (ExecutionException e) {
-//				e.printStackTrace();
-//			}
-//
-//			if (bitmap != null) {
-//				holder.image.setImageBitmap(bitmap);
-//			} else {
-//				System.out.println("Bitmap is null");
-//			}
-//		}
 
-        String isGif = posts.get(position).getTitle();
-        if (isGif.endsWith(".gif") || isGif.endsWith(".gifv")) {
-            Ion.with(holder.image).error(R.drawable.error).load(posts.get(position).getUrl());
-        } else {
-            Picasso.with(context).load(posts.get(position).getUrl()).into(holder.image);
+        if (posts.get(position).getSubreddit().matches("tifu")) {
+            Picasso.with(context).load(R.drawable.ic_text_format_black_24dp).into(holder.image);
+            holder.image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(posts.get(position).getUrl()));
+                    browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(browserIntent);
+                }
+            });
         }
+        else {
+            //For normal posts
+            String isGif = posts.get(position).getTitle();
+            if (isGif.endsWith(".gif") || isGif.endsWith(".gifv")) {
+                Ion.with(holder.image).error(R.drawable.error).load(posts.get(position).getUrl());
+            } else {
+                Picasso.with(context).load(posts.get(position).getUrl()).into(holder.image);
+            }
+        }
+
 
 
         DisplayMetrics outMetrics = new DisplayMetrics();
