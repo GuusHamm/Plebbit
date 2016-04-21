@@ -1,15 +1,20 @@
 package com.gmail.guushamm.plebbit;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,7 +22,14 @@ import android.widget.TextView;
 import com.gmail.guushamm.plebbit.model.Post;
 import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -45,7 +57,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
     }
 
 	@Override
-    public void onBindViewHolder(PostViewHolder holder, final int position) {
+    public void onBindViewHolder(final PostViewHolder holder, final int position) {
         holder.title.setText(posts.get(position).getTitle());
         holder.score.setText(String.valueOf(posts.get(position).getPoints()));
         Bitmap bitmap = null;
@@ -70,6 +82,20 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
             } else {
                 Picasso.with(context).load(posts.get(position).getUrl()).into(holder.image);
             }
+
+            holder.image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Post p = posts.get(position);
+                    Bitmap b = null;
+                    try {
+                        b = BitmapFactory.decodeStream((InputStream)new URL(p.getUrl()).getContent());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    savePost(p, b);
+                }
+            });
         }
 
 
@@ -79,6 +105,31 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
         float scWidth = outMetrics.widthPixels;
         holder.image.getLayoutParams().width = (int) scWidth;
 
+    }
+
+    public void savePost(Post p, Bitmap bitmap) {
+        p.setPathToFile(saveImageToPostID(bitmap, p.getId()));
+        File outFile = new File(context.getFilesDir(), "plebbitSaveData.data");
+        p.save(context, outFile);
+    }
+
+    public String saveImageToPostID(Bitmap bitmap, String fileName) {
+        ContextWrapper cw = new ContextWrapper(context.getApplicationContext());
+        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        File myPath = new File(directory, fileName);
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(myPath);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return directory.getAbsolutePath();
     }
 
     @Override
