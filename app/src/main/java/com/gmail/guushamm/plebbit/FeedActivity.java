@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import com.gmail.guushamm.plebbit.model.Post;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -61,7 +62,12 @@ public class FeedActivity extends AppCompatActivity {
 				try {
 					subreddit = String.valueOf(adapter.getItem(position));
 					//TODO use selected type
-					posts = new RedditSubredditApi().execute(RedditApi.getInstance().generateURL(subreddit, "top")).get();
+					if (subreddit.matches("MyItems")) {
+						File outFile = new File(getFilesDir(), "plebbitSaveData.data");
+						posts = Post.read(outFile);
+					} else {
+						posts = new RedditSubredditApi().execute(RedditApi.getInstance().generateURL(subreddit, "top")).get();
+					}
 					setRecycleView();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
