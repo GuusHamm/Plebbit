@@ -17,6 +17,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.gmail.guushamm.plebbit.model.Post;
@@ -89,7 +90,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
 
             }
 
-            holder.image.setOnClickListener(new View.OnClickListener() {
+            holder.saveButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Post p = posts.get(position);
@@ -153,6 +154,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
         TextView title;
         TextView score;
         ImageView image;
+        ImageButton saveButton;
 
         PostViewHolder(View itemView) {
             super(itemView);
@@ -160,6 +162,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
             title = (TextView) itemView.findViewById(R.id.text);
             score = (TextView) itemView.findViewById(R.id.score);
             image = (ImageView) itemView.findViewById(R.id.image);
+            saveButton = (ImageButton) itemView.findViewById(R.id.saveButton);
         }
     }
 }

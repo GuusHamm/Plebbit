@@ -72,6 +72,16 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
                     android:padding="2dp"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:id="@+id/saveButton"
+                android:src="@drawable/ic_save_black_24dp"
+                android:backgroundTint="#E0E0E0"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/score" />
         </RelativeLayout>
 
     </LinearLayout>

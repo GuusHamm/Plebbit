@@ -116,29 +116,30 @@ public class FeedActivity extends AppCompatActivity {
 		adapter = new RVAdapter(posts, getWindowManager().getDefaultDisplay(), getApplicationContext());
 		recyclerView.setAdapter(adapter);
 
-		recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-			@Override
-			public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-				super.onScrolled(recyclerView, dx, dy);
+			recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+				@Override
+				public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+					super.onScrolled(recyclerView, dx, dy);
 
-				LinearLayoutManager llm = (LinearLayoutManager) recyclerView.getLayoutManager();
+					LinearLayoutManager llm = (LinearLayoutManager) recyclerView.getLayoutManager();
 
-				int visibleItemCount = recyclerView.getChildCount();
-				int totalItemCount = llm.getItemCount();
-				int firstVisibleItemIndex = llm.findFirstVisibleItemPosition();
-				int lastVisibleItemIndex = llm.findLastVisibleItemPosition();
+					int visibleItemCount = recyclerView.getChildCount();
+					int totalItemCount = llm.getItemCount();
+					int firstVisibleItemIndex = llm.findFirstVisibleItemPosition();
+					int lastVisibleItemIndex = llm.findLastVisibleItemPosition();
 
-				if (totalItemCount - lastVisibleItemIndex <= 5) {
-					//Load more posts here
-					loadMorePosts(totalItemCount);
+					if (totalItemCount - lastVisibleItemIndex <= 5) {
+						//Load more posts here
+						loadMorePosts(totalItemCount);
+					}
 				}
-			}
 
-			@Override
-			public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-				super.onScrollStateChanged(recyclerView, newState);
-			}
-		});
+				@Override
+				public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+					super.onScrollStateChanged(recyclerView, newState);
+				}
+			});
+
 	}
 
 	@Override
@@ -204,9 +205,11 @@ public class FeedActivity extends AppCompatActivity {
 	}
 
 	public void loadMorePosts(int startPosition) {
+		if (subreddit.matches("MyItems")) {
+			return;
+		}
 		try {
 //			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute(this.subreddit).get();
-			//TODO use selected type
 			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute(RedditApi.getInstance().generateURL(subreddit, "Current")).get();
 			posts.addAll(newPosts);
 			adapter.notifyItemRangeInserted(startPosition, newPosts.size());

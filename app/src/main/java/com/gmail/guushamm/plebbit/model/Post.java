@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Created by guushamm on 07/04/16.
  */
-public class Post implements Serializable {
+public class Post implements Serializable, Comparable {
 
 	String subreddit;
 	String title;
@@ -104,6 +104,12 @@ public class Post implements Serializable {
 			posts = new ArrayList<Post>();
 		}
 
+		for (Post p : posts) {
+			if (this.getId().matches(p.getId())) {
+				return;
+			}
+		}
+
 		posts.add(this);
 
 		ObjectOutput out;
@@ -120,6 +126,10 @@ public class Post implements Serializable {
 	}
 
 	public static List<Post> read(File f) {
+		if (!f.exists()) {
+			return null;
+		}
+
 		ObjectInput in;
 		List<Post> posts = null;
 		try {
@@ -148,5 +158,17 @@ public class Post implements Serializable {
 		}
 
 		return null;
+	}
+
+	@Override
+	public int compareTo(Object another) {
+		Post other = (Post) another;
+		if (this.getId().matches(other.getId())) {
+			return 0;
+		}
+		else {
+			return -1;
+		}
+
 	}
 }
