@@ -8,7 +8,8 @@
 	<item	android:title="filter"
             android:icon="@drawable/ic_filter_list_white_24dp"
 			app:showAsAction="ifRoom">
-		<menu>
+		<menu
+			android:id="@+id/menuSorting">
 			<item
 					android:id="@+id/menuSortHot"
 					android:title="Hot" />
@@ -17,7 +18,15 @@
 					android:title="Rising" />
             <item
 					android:id="@+id/menuSortTop"
-					android:title="Top" />
+					android:title="Top">
+					<!--<menu>-->
+						<!--<item-->
+							<!--android:id="@+id/top_all"-->
+							<!--android:title="All time"/>-->
+						<!--<item android:id="@+id/top_year"-->
+							<!--android:title="Last year"/>-->
+					<!--</menu>-->
+			</item>
 		</menu>
 	</item>
 </menu>

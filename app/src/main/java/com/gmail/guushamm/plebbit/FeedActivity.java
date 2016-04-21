@@ -87,8 +87,6 @@ public class FeedActivity extends AppCompatActivity {
 		// Enable the Up button
 		ab.setDisplayHomeAsUpEnabled(true);
 
-
-
 		setRecycleView();
 
 
@@ -167,6 +165,39 @@ public class FeedActivity extends AppCompatActivity {
 		switch (id) {
 			case R.id.action_settings:
 				return true;
+			case R.id.menuSortHot:
+				try {
+					RedditApi.getInstance().setAfter("");
+					posts = new RedditSubredditApi().execute(RedditApi.getInstance().generateURL(subreddit, "hot")).get();
+					setRecycleView();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+				return true;
+			case R.id.menuSortRising:
+				try {
+					RedditApi.getInstance().setAfter("");
+					posts = new RedditSubredditApi().execute(RedditApi.getInstance().generateURL(subreddit, "rising")).get();
+					setRecycleView();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+				return true;
+			case R.id.menuSortTop:
+				try {
+					RedditApi.getInstance().setAfter("");
+					posts = new RedditSubredditApi().execute(RedditApi.getInstance().generateURL(subreddit, "top")).get();
+					setRecycleView();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+				return true;
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -176,7 +207,7 @@ public class FeedActivity extends AppCompatActivity {
 		try {
 //			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute(this.subreddit).get();
 			//TODO use selected type
-			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute(RedditApi.getInstance().generateURL(subreddit, "top")).get();
+			ArrayList<Post> newPosts = (ArrayList<Post>) new RedditSubredditApi().execute(RedditApi.getInstance().generateURL(subreddit, "Current")).get();
 			posts.addAll(newPosts);
 			adapter.notifyItemRangeInserted(startPosition, newPosts.size());
 		} catch (InterruptedException e) {
