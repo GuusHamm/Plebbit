@@ -1,15 +1,11 @@
 package com.gmail.guushamm.plebbit;
 
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -23,13 +19,8 @@ import android.widget.TextView;
 import com.gmail.guushamm.plebbit.model.Post;
 import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.List;
 
@@ -105,7 +96,23 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
             });
         }
 
+		holder.imageButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				String permalink = String.format("http://reddit.com%s",posts.get(position).getPermalink());
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(permalink));
+				browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				context.startActivity(browserIntent);
+			}
+		});
 
+        holder.upvoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RedditRestApi redditRestApi = new RedditRestApi(context);
+                redditRestApi.castVote(posts.get(position).getId(),1);
+            }
+        });
 
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
@@ -153,6 +160,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
         CardView cv;
         TextView title;
         TextView score;
+		ImageButton imageButton;
+        ImageButton upvoteButton;
+        ImageButton downvoteButton;
         ImageView image;
         ImageButton saveButton;
 
@@ -161,6 +171,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
             cv = (CardView)itemView.findViewById(R.id.cardView);
             title = (TextView) itemView.findViewById(R.id.text);
             score = (TextView) itemView.findViewById(R.id.score);
+			imageButton = (ImageButton) itemView.findViewById(R.id.commentsButton);
+			upvoteButton = (ImageButton) itemView.findViewById(R.id.upVoteButton);
+			downvoteButton = (ImageButton) itemView.findViewById(R.id.downVoteButton);
             image = (ImageView) itemView.findViewById(R.id.image);
             saveButton = (ImageButton) itemView.findViewById(R.id.saveButton);
         }

@@ -23,7 +23,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:background="#E0E0E0"
-                />
+                android:textColor="#000000"/>
 
         <ImageView
                 android:id="@+id/image"
@@ -44,21 +44,21 @@
             <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="-"
-                    android:id="@+id/button2"
-                    android:layout_alignParentStart="false"
-                    android:layout_alignParentEnd="false"
-                    android:layout_toLeftOf="@+id/button"
-                    android:src="@drawable/ic_thumb_down_black_24dp"
+                    android:id="@+id/upVoteButton"
+                    android:layout_marginRight="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_thumb_up_black_24dp"
                     android:backgroundTint="#E0E0E0"/>
 
             <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/button"
-                    android:layout_marginRight="5dp"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_thumb_up_black_24dp"
+                    android:text="-"
+                    android:id="@+id/downVoteButton"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentEnd="false"
+                    android:layout_toLeftOf="@+id/upVoteButton"
+                    android:src="@drawable/ic_thumb_down_black_24dp"
                     android:backgroundTint="#E0E0E0"/>
 
             <TextView
@@ -68,9 +68,21 @@
                     android:textSize="25dp"
                     android:text="9999"
                     android:layout_marginRight="5dp"
-                    android:background="#E0E0E0"
-                    android:layout_marginTop="5dp"
                     android:layout_marginLeft="5dp"
+                    android:padding="2dp"
+                    android:textColor="#000000"
+                    android:layout_marginTop="5dp"/>
+
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:id="@+id/commentsButton"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentEnd="false"
+                    android:src="@drawable/ic_chat_black_24dp"
+                    android:backgroundTint="#E0E0E0"
+                    android:layout_toRightOf="@+id/score"/>
                     android:padding="2dp"/>
 
             <ImageButton
@@ -81,7 +93,7 @@
                 android:src="@drawable/ic_save_black_24dp"
                 android:backgroundTint="#E0E0E0"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/score" />
+                android:layout_toRightOf="@+id/commentsButton"/>
         </RelativeLayout>
 
     </LinearLayout>
