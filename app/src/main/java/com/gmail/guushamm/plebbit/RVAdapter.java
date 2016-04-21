@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -53,7 +52,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
 
         if (posts.get(position).getSubreddit().matches("tifu")) {
             Picasso.with(context).load(R.drawable.ic_text_format_black_24dp).into(holder.image);
-            holder.image.setOnClickListener(new View.OnClickListener() {
+             holder.image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(posts.get(position).getUrl()));
@@ -68,7 +67,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
             if (isGif.endsWith(".gif") || isGif.endsWith(".gifv")) {
                 Ion.with(holder.image).error(R.drawable.error).load(posts.get(position).getUrl());
             } else {
-                Picasso.with(context).load(posts.get(position).getUrl()).into(holder.image);
+				String url = posts.get(position).getUrl();
+
+				if (url.contains("imgur") && (!url.endsWith(".png") && !url.endsWith(".jpg") && !url.endsWith(".jpeg"))){
+					url += ".png";
+				}
+				Picasso.with(context).load(url).centerInside().fit().into(holder.image);
+
             }
         }
 

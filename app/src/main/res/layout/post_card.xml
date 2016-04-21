@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:id="@+id/cardView"
-    card_view:cardBackgroundColor="@android:color/holo_blue_dark"
+    card_view:cardBackgroundColor="#FFFFFF"
     card_view:cardElevation="4dp"
     card_view:cardUseCompatPadding="true">
     <!--card_view:cardCornerRadius="4dp"--> <!-- Deze is voor afronden van de cardviews-->
@@ -20,21 +20,26 @@
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
                 android:text="Post Title"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
                 android:layout_gravity="center"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:background="#E0E0E0"
+                />
 
         <ImageView
-            android:id="@+id/image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"/>
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:minHeight="200dp"
+                android:nestedScrollingEnabled="false"
+                />
 
         <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="#E0E0E0"
+                >
 
             <ImageButton
                     android:layout_width="wrap_content"
@@ -44,7 +49,8 @@
                     android:layout_alignParentStart="false"
                     android:layout_alignParentEnd="false"
                     android:layout_toLeftOf="@+id/button"
-                    android:src="@drawable/ic_thumb_down_black_24dp"/>
+                    android:src="@drawable/ic_thumb_down_black_24dp"
+                    android:backgroundTint="#E0E0E0"/>
 
             <ImageButton
                     android:layout_width="wrap_content"
@@ -52,7 +58,8 @@
                     android:id="@+id/button"
                     android:layout_marginRight="5dp"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_thumb_up_black_24dp"/>
+                    android:src="@drawable/ic_thumb_up_black_24dp"
+                    android:backgroundTint="#E0E0E0"/>
 
             <TextView
                     android:id="@+id/score"
@@ -60,7 +67,11 @@
                     android:layout_height="wrap_content"
                     android:textSize="25dp"
                     android:text="9999"
-                    android:layout_marginRight="5dp"/>
+                    android:layout_marginRight="5dp"
+                    android:background="#E0E0E0"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:padding="2dp"/>
         </RelativeLayout>
 
     </LinearLayout>
