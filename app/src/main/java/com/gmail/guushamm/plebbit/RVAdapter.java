@@ -55,8 +55,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
         holder.score.setText(String.valueOf(posts.get(position).getPoints()));
         Bitmap bitmap = null;
 
+        Post post = posts.get(position);
 
-        if (posts.get(position).getSubreddit().matches("tifu")) {
+        if (post.getSubreddit().matches("tifu")) {
             Picasso.with(context).load(R.drawable.ic_text_format_black_24dp).into(holder.image);
              holder.image.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,6 +67,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
                     context.startActivity(browserIntent);
                 }
             });
+        }
+        else if (post.getSubreddit().matches("MyItems")) {
+            holder.image.setImageBitmap(post.getSavedBitmap());
         }
         else {
             //For normal posts

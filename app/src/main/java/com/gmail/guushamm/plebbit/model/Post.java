@@ -98,6 +98,10 @@ public class Post implements Serializable, Comparable {
 		this.pathToFile = pathToFile;
 	}
 
+	public void setSubreddit(String subreddit) {
+		this.subreddit = subreddit;
+	}
+
 	public void save(Context context, File f) {
 		List<Post> posts = read(f);
 		if (posts == null) {
@@ -110,6 +114,7 @@ public class Post implements Serializable, Comparable {
 			}
 		}
 
+		setSubreddit("MyItems");
 		posts.add(this);
 
 		ObjectOutput out;
@@ -151,6 +156,18 @@ public class Post implements Serializable, Comparable {
 	public Bitmap getSavedBitmap(String path) {
 		try {
 			File f = new File(path, id);
+			Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+			return b;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public Bitmap getSavedBitmap() {
+		try {
+			File f = new File(getPathToFile(), id);
 			Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
 			return b;
 		} catch (FileNotFoundException e) {
