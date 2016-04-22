@@ -160,6 +160,8 @@ public class FeedActivity extends AppCompatActivity {
 		spinner.setDropDownVerticalOffset(200);
 		spinner.setDropDownHorizontalOffset(-500);
 		spinner.performClick();
+
+		spinner.setDropDownVerticalOffset(-200);
 	}
 
 	public void setRecycleView() {
