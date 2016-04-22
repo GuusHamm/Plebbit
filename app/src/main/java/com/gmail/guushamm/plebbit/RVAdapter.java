@@ -60,16 +60,16 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
         if (post.getSubreddit().matches("tifu")) {
             Picasso.with(context).load(R.drawable.ic_text_format_black_24dp).into(holder.image);
              holder.image.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(posts.get(position).getUrl()));
-                    browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(browserIntent);
-                }
-            });
+                 @Override
+                 public void onClick(View v) {
+                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(posts.get(position).getUrl()));
+                     browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                     context.startActivity(browserIntent);
+                 }
+             });
         }
         else if (post.getSubreddit().matches("MyItems")) {
-            holder.image.setImageBitmap(post.getSavedBitmap());
+            Picasso.with(context).load(new File(post.getPathToFile(), post.getId())).into(holder.image);
         }
         else {
             //For normal posts
