@@ -70,6 +70,9 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
         }
         else if (post.getSubreddit().matches("MyItems")) {
             Picasso.with(context).load(new File(post.getPathToFile(), post.getId())).into(holder.image);
+
+            holder.saveButton.setEnabled(false);
+            holder.saveButton.setVisibility(View.INVISIBLE);
         }
         else {
             //For normal posts

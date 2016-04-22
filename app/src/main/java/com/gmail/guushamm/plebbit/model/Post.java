@@ -102,32 +102,40 @@ public class Post implements Serializable, Comparable {
 		this.subreddit = subreddit;
 	}
 
-	public void save(Context context, File f) {
-		List<Post> posts = read(f);
-		if (posts == null) {
-			posts = new ArrayList<Post>();
-		}
+	public void save(Context context, final File f) {
+		final Post post = this;
+		Thread t = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				List<Post> posts = read(f);
+				if (posts == null) {
+					posts = new ArrayList<Post>();
+				}
 
-		for (Post p : posts) {
-			if (this.getId().matches(p.getId())) {
-				return;
+				for (Post p : posts) {
+					if (post.getId().matches(p.getId())) {
+						return;
+					}
+				}
+
+				post.setSubreddit("MyItems");
+				posts.add(post);
+
+				ObjectOutput out;
+				try {
+					f.createNewFile();
+					out = new ObjectOutputStream(new FileOutputStream(f));
+					out.writeObject(posts);
+					out.close();
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
-		}
+		});
+		t.run();
 
-		setSubreddit("MyItems");
-		posts.add(this);
-
-		ObjectOutput out;
-		try {
-			f.createNewFile();
-			out = new ObjectOutputStream(new FileOutputStream(f));
-			out.writeObject(posts);
-			out.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public static List<Post> read(File f) {

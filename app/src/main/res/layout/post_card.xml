@@ -88,7 +88,7 @@
                     android:id="@+id/commentsButton"
                     android:layout_alignParentStart="false"
                     android:layout_alignParentEnd="false"
-                    android:src="@drawable/ic_thumb_down_black_24dp"
+                    android:src="@drawable/ic_chat_black_24dp"
                     android:backgroundTint="#E0E0E0"
                     android:layout_toRightOf="@+id/score"/>
                     android:padding="2dp"/>
