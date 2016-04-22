@@ -5,7 +5,7 @@
                                     android:layout_height="wrap_content"
                                     android:id="@+id/cardView"
                                     card_view:cardBackgroundColor="#FFFFFF"
-                                    card_view:cardElevation="4dp"
+                                    card_view:cardElevation="10dp"
                                     card_view:cardUseCompatPadding="true"
         >
     <!--card_view:cardCornerRadius="4dp"--> <!-- Deze is voor afronden van de cardviews-->
@@ -102,7 +102,6 @@
                 android:backgroundTint="#E0E0E0"
                 android:layout_alignParentTop="true"
                 android:layout_toRightOf="@+id/commentsButton"/>
-
         </RelativeLayout>
 
     </LinearLayout>
