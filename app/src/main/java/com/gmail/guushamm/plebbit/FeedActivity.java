@@ -275,8 +275,8 @@ public class FeedActivity extends AppCompatActivity {
 					RedditApi.getInstance().setAfter("");
 					posts = new RedditSubredditApi().execute(RedditApi.getInstance().generateURL(subreddit, "rising")).get();
 					setRecycleView();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				} catch (InterruptedException e) {e.printStackTrace();
+
 				} catch (ExecutionException e) {
 					e.printStackTrace();
 				}

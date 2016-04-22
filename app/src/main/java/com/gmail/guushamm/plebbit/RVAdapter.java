@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.gmail.guushamm.plebbit.model.Post;
 import com.koushikdutta.ion.Ion;
 import com.squareup.picasso.Picasso;
@@ -109,11 +110,23 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PostViewHolder> {
         holder.upvoteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RedditRestApi redditRestApi = new RedditRestApi(context);
-                redditRestApi.castVote(posts.get(position).getId(),1);
+                Toast toast = Toast.makeText(context,"Upvoted",Toast.LENGTH_SHORT);
+                toast.show();
+//                RedditRestApi redditRestApi = new RedditRestApi(context);
+//                redditRestApi.castVote(posts.get(position).getId(),1);
             }
         });
 
+
+        holder.downvoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast toast = Toast.makeText(context,"Downvoted",Toast.LENGTH_SHORT);
+                toast.show();
+//                RedditRestApi redditRestApi = new RedditRestApi(context);
+//                redditRestApi.castVote(posts.get(position).getId(),-1);
+            }
+        });
         DisplayMetrics outMetrics = new DisplayMetrics();
         display.getMetrics(outMetrics);
         float scWidth = outMetrics.widthPixels;
