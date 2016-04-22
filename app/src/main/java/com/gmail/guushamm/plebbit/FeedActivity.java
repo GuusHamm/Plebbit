@@ -17,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -72,6 +73,13 @@ public class FeedActivity extends AppCompatActivity {
 		Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 		setSupportActionBar(myToolbar);
 
+
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setHomeButtonEnabled(false);
+		actionBar.setDisplayHomeAsUpEnabled(false);
+		actionBar.setHomeAsUpIndicator(R.drawable.ic_sentiment_very_satisfied_white_24dp);
+		actionBar.setDisplayShowHomeEnabled(false);
+
 		// Get a support ActionBar corresponding to this toolbar
 		ActionBar ab = getSupportActionBar();
 
@@ -110,8 +118,6 @@ public class FeedActivity extends AppCompatActivity {
 			}
 		});
 
-
-
 		ab.setCustomView(view);
 		ab.setDisplayShowCustomEnabled(true);
 		// Enable the Up button
@@ -119,8 +125,6 @@ public class FeedActivity extends AppCompatActivity {
 
 
 		setRecycleView();
-
-
 
 		//Notification test
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
@@ -136,6 +140,28 @@ public class FeedActivity extends AppCompatActivity {
 		manager.notify(001, mBuilder.build());
 
 
+	}
+
+	@Override
+	public boolean onKeyDown(int keycode, KeyEvent e) {
+		switch (keycode) {
+			case KeyEvent.KEYCODE_MENU:
+				menuButtonAction();
+				return true;
+		}
+
+		return super.onKeyDown(keycode, e);
+	}
+
+	public void menuButtonAction() {
+		Toast.makeText(this, "Menu test", Toast.LENGTH_SHORT).show();
+		Spinner spinner = (Spinner) findViewById(R.id.spinner);
+
+		spinner.setDropDownVerticalOffset(200);
+		spinner.setDropDownHorizontalOffset(-500);
+		spinner.performClick();
+
+		spinner.setDropDownVerticalOffset(-200);
 	}
 
 	public void setRecycleView() {
