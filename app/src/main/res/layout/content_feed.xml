@@ -10,7 +10,7 @@
 		tools:showIn="@layout/activity_feed"
 		tools:context="com.gmail.guushamm.plebbit.FeedActivity"
 		android:orientation="vertical"
-		android:background="@color/lightgray">
+		android:background="@color/white">
 
 	<android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
